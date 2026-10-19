@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11101b">
+  <meta name="description" content="Make cartoon music videos from your own audio. Free, local-first, no credits or paid AI APIs.">
+  <title>BeatToon — Free Music Video Studio</title>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="#">♫ BeatToon</a><span class="pill">● Local-first · No credits</span></header>
+  <main class="shell">
+    <section class="intro"><p class="eyebrow">YOUR SONG. YOUR CARTOON.</p><h1>Turn your music into<br><span>an animated video.</span></h1><p class="subhead">Upload a track, choose a visual mood, and create a music-reactive cartoon video in your browser.</p></section>
+    <section class="workspace">
+      <section class="panel preview">
+        <div class="panel-heading"><b>VIDEO PREVIEW</b><span id="status">READY WHEN YOU ARE</span></div>
+        <div class="stage"><canvas id="stage" width="960" height="540"></canvas><div id="empty" class="empty"><div class="music-icon">♫</div><b>Your music video starts here</b><span>Upload an MP3 or WAV to begin</span></div></div>
+        <div class="timeline"><div id="timelineFill"></div></div>
+        <div class="meta"><span id="trackName">No track selected</span><span id="duration">00:00</span></div>
+      </section>
+      <aside class="panel controls">
+        <div class="step"><span>01</span><div><b>Choose your song</b><small>Your audio stays on this device.</small></div></div>
+        <label class="dropzone" id="dropzone"><input id="audioFile" type="file" accept="audio/*"><span class="upload">↑</span><b>Choose an audio file</b><small>MP3, WAV, M4A or OGG</small><small>For the first test, use a song under 5 minutes.</small></label>
+        <div class="step"><span>02</span><div><b>Pick a visual mood</b><small>Change the cartoon scene style.</small></div></div>
+        <div class="styles">
+          <button class="style selected" data-style="concert">🎤<b>Stage energy</b><small>Lights & crowd</small></button>
+          <button class="style" data-style="dream">🌙<b>Dream world</b><small>Floating shapes</small></button>
+          <button class="style" data-style="street">🏙️<b>City groove</b><small>Urban cartoon</small></button>
+          <button class="style" data-style="sunrise">🌅<b>Golden hour</b><small>Warm colours</small></button>
+        </div>
+        <div class="step"><span>03</span><div><b>Make your video</b><small>Render on your own device.</small></div></div>
+        <button id="generate" class="primary" disabled>✦ Generate MP4 video</button>
+        <div id="progressWrap" hidden><div class="progressMeta"><span id="progressText">Preparing…</span><span id="progressPct">0%</span></div><div class="progress"><div id="progressBar"></div></div></div>
+        <a id="download" class="download" hidden download="beattoon-music-video.mp4">↓ Download MP4 video</a>
+        <p class="privacy">🔒 No account, paid API, or upload server. Rendering happens in your browser.</p>
+      </aside>
+    </section>
+    <section class="features"><div><b>Music-reactive</b><p>Cartoon characters, lights and motion respond to the soundtrack.</p></div><div><b>Made for creators</b><p>A starting point for Suno songs, demos and original music.</p></div><div><b>Free by design</b><p>No subscriptions or per-export charges.</p></div></section>
+    <footer>BeatToon is an early open-source MVP. Export performance depends on your browser and device.</footer>
+  </main>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
