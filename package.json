@@ -1,0 +1,20 @@
+{
+  "name": "beattoon",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "predev": "node scripts/copy-ffmpeg-core.js",
+    "dev": "vite",
+    "prebuild": "node scripts/copy-ffmpeg-core.js",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@ffmpeg/core": "0.12.10",
+    "@ffmpeg/ffmpeg": "0.12.15"
+  },
+  "devDependencies": {
+    "vite": "6.4.1"
+  }
+}
