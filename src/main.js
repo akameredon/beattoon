@@ -90,7 +90,7 @@ $('generate').addEventListener('click',async()=>{
   audio.pause();recorder.stop();await done;stream.getTracks().forEach(t=>t.stop());try{analyser.disconnect(dest);}catch{}
   const webm=new Blob(chunks,{type:mime});if(!webm.size)throw Error('The browser produced an empty video. Try a desktop browser.');
   progress(68,'Loading local MP4 encoder…');ffmpeg=new FFmpeg();ffmpeg.on('progress',({progress:p})=>progress(70+Math.max(0,Math.min(1,p))*27,'Converting to MP4 on this device…'));
-  const base=new URL('/ffmpeg/',location.href);await ffmpeg.load({coreURL:new URL('ffmpeg-core.js',base).href,wasmURL:new URL('ffmpeg-core.wasm',base).href});
+  const base=new URL(import.meta.env.BASE_URL+'ffmpeg/',location.href);await ffmpeg.load({coreURL:new URL('ffmpeg-core.js',base).href,wasmURL:new URL('ffmpeg-core.wasm',base).href});
   await ffmpeg.writeFile('recording.webm',new Uint8Array(await webm.arrayBuffer()));await ffmpeg.writeFile('original-audio',new Uint8Array(await(await fetch(audioUrl)).arrayBuffer()));
   await ffmpeg.exec(['-i','recording.webm','-i','original-audio','-map','0:v:0','-map','1:a:0','-c:v','libx264','-preset','ultrafast','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k','-shortest','-movflags','+faststart','output.mp4']);
   const data=await ffmpeg.readFile('output.mp4');resultUrl=URL.createObjectURL(new Blob([data.buffer],{type:'video/mp4'}));$('download').href=resultUrl;$('download').hidden=false;$('status').textContent='VIDEO READY';progress(100,'Done — '+(data.length/1024/1024).toFixed(1)+' MB');
