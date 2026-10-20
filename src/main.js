@@ -60,14 +60,19 @@ animate();
 function setupAudio(){
   try{if(!audioContext)audioContext=new(window.AudioContext||window.webkitAudioContext)();if(!source){source=audioContext.createMediaElementSource(audio);analyser=audioContext.createAnalyser();analyser.fftSize=256;bins=new Uint8Array(analyser.frequencyBinCount);source.connect(analyser);analyser.connect(audioContext.destination);}}catch(e){console.warn(e);}
 }
-input.addEventListener('change',()=>{
-  const file=input.files&&input.files[0];if(!file)return;
+function loadAudio(file){
+  if(!file)return;
+  if(!/\.(mp3|wav|m4a|ogg)$/i.test(file.name)){
+    input.value='';$('uploadError').textContent='Choose an MP3, WAV, M4A, or OGG audio file. MP4 video is not supported.';$('uploadError').hidden=false;$('status').textContent='UNSUPPORTED FILE';return;
+  }
+  $('uploadError').hidden=true;
   if(audioUrl)URL.revokeObjectURL(audioUrl);audioUrl=URL.createObjectURL(file);audio.src=audioUrl;audio.load();
   $('trackName').textContent=file.name;$('empty').hidden=true;$('generate').disabled=false;$('status').textContent='TRACK LOADED';setupAudio();
   audio.addEventListener('loadedmetadata',()=>{$('duration').textContent=timeLabel(audio.duration);},{once:true});
-});
+}
+input.addEventListener('change',()=>loadAudio(input.files&&input.files[0]));
 document.querySelectorAll('.style').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.style').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');style=btn.dataset.style;}));
-const drop=$('dropzone');drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('drag');});drop.addEventListener('dragleave',()=>drop.classList.remove('drag'));drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('drag');const f=e.dataTransfer.files[0];if(f&&f.type.startsWith('audio/')){const dt=new DataTransfer();dt.items.add(f);input.files=dt.files;input.dispatchEvent(new Event('change'));}});
+const drop=$('dropzone');drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('drag');});drop.addEventListener('dragleave',()=>drop.classList.remove('drag'));drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('drag');loadAudio(e.dataTransfer.files[0]);});
 function progress(p,msg){$('progressWrap').hidden=false;$('progressText').textContent=msg;$('progressPct').textContent=Math.round(p)+'%';$('progressBar').style.width=p+'%';}
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 $('generate').addEventListener('click',async()=>{

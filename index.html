@@ -20,7 +20,7 @@
       </section>
       <aside class="panel controls">
         <div class="step"><span>01</span><div><b>Choose your song</b><small>Your audio stays on this device.</small></div></div>
-        <label class="dropzone" id="dropzone"><input id="audioFile" type="file" accept="audio/*"><span class="upload">↑</span><b>Choose an audio file</b><small>MP3, WAV, M4A or OGG</small><small>For the first test, use a song under 5 minutes.</small></label>
+        <label class="dropzone" id="dropzone"><input id="audioFile" type="file" accept=".mp3,.wav,.m4a,.ogg,audio/mpeg,audio/wav,audio/x-wav,audio/ogg"><span class="upload">↑</span><b>Choose an audio file</b><small>MP3, WAV, M4A or OGG</small><small>For the first test, use a song under 5 minutes.</small><small id="uploadError" role="status" hidden></small></label>
         <div class="step"><span>02</span><div><b>Pick a visual mood</b><small>Change the cartoon scene style.</small></div></div>
         <div class="styles">
           <button class="style selected" data-style="concert">🎤<b>Stage energy</b><small>Lights & crowd</small></button>
